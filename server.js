@@ -71,7 +71,7 @@ app.get('/api/dashboard',jwtMW,(req,res)=>  {
     });
 });
 
-app.get('/api/settings', jwtMW, (req, res) => { // Create a new route for "settings" and protect it with JWT middleware
+app.get('/api/settings', jwtMW, (req, res) => { 
     res.json({
         success: true,
         settingsContent: 'This is a protected settings page'
