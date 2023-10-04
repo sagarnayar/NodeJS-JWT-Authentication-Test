@@ -4,6 +4,7 @@ const jwt=require('jsonwebtoken');
 const exjwt = require('express-jwt');
 const bodyParser= require('body-parser');
 const path=require('path');
+const axios = require('axios');
 
 
 app.use((req,res,next) => {
@@ -42,7 +43,7 @@ app.post('/api/login', (req, res) => {
     
     for (let user of users) {
         if (username == user.username && password == user.password) {
-            let token = jwt.sign({ id: user.id, username: user.username }, secretKey, { expiresIn: '7d' });
+            let token = jwt.sign({ id: user.id, username: user.username }, secretKey, { expiresIn: '3m' });
             res.json({
                 success: true,
                 err: null,
@@ -67,6 +68,13 @@ app.get('/api/dashboard',jwtMW,(req,res)=>  {
     res.json({
         success:true,
         myContent:'Secret content that only logged in people can see'
+    });
+});
+
+app.get('/api/settings', jwtMW, (req, res) => { // Create a new route for "settings" and protect it with JWT middleware
+    res.json({
+        success: true,
+        settingsContent: 'This is a protected settings page'
     });
 });
 
